@@ -1,0 +1,5 @@
+Evaluation_result/*
+Inference_result/*
+Retrieval_result/*
+
+__pycache__/
