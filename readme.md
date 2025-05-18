@@ -1,6 +1,11 @@
 # MIRAGE Benchmark
 
+ [![Dataset on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/dataset-on-hf-sm.svg)](https://huggingface.co/datasets/nlpai-lab/mirage) [![Read the Paper](https://img.shields.io/badge/Paper-arXiv%3A2054.17137-B31B1B.svg)](https://arxiv.org/abs/2504.17137)
+
+:tada: Our paper introducing MIRAGE has been accepted to the Findings of NAACL 2025!
+
 MIRAGE is a benchmark designed to evaluate the performance of retrieval-augmented generation (RAG) systems using various QA datasets. It includes 7560 Q/A pairs and 37800 context pools collected from Wikipedia-based QA benchmarks such as IfQA, NaturalQA, TriviaQA, DROP, and PopQA.
+
 
 ## Key Features
 
@@ -82,6 +87,10 @@ MIRAGE is a benchmark designed to evaluate the performance of retrieval-augmente
 
 - **Simple and Fast**: Designed for quick and easy use with minimal computational resources.
 - **Effective for LLM/Retriever/RAG Experiments**: Provides datasets and code for effective experimentation without heavy resource requirements.
+- **Hugging Face Integration**: You can find our MIRAGE dataest at huggingface now!
+    ```sh
+    load_dataset('nlpai-lab/mirage')
+    ```
 
 ## Notes
 
