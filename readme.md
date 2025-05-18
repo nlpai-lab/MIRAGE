@@ -94,3 +94,17 @@ MIRAGE is a benchmark designed to evaluate the performance of retrieval-augmente
 - **GPT-4o Inference**: Costs approximately $70 for a single run. This may be subjected to change depending on the openAI's price policy.
 - **Batch API**: Recommended for cost savings.
 
+## Citation
+
+```text
+@misc{park2025miragemetricintensivebenchmarkretrievalaugmented,
+      title={MIRAGE: A Metric-Intensive Benchmark for Retrieval-Augmented Generation Evaluation}, 
+      author={Chanhee Park and Hyeonseok Moon and Chanjun Park and Heuiseok Lim},
+      year={2025},
+      eprint={2504.17137},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2504.17137}, 
+}
+```
+
