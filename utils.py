@@ -11,6 +11,37 @@ This module provides helper functions to:
 from argparse import ArgumentTypeError
 import json, yaml, os, jsonlines
 from typing import Any, Dict, List, Union
+from datasets import Dataset
+
+def convert_doc_pool(dataset: Dataset) -> List[Dict[str, Any]]:
+    mapped_id = []
+    doc_name = []
+    doc_chunk = []
+    support = []
+    collected = []
+
+    for data_dict in dataset['doc_pool']:
+        mapped_id.extend(data_dict['mapped_id'])
+        doc_name.extend(data_dict['doc_name'])
+        doc_chunk.extend(data_dict['doc_chunk'])
+        support.extend(data_dict['support'])
+
+    for i in range(len(mapped_id)):
+        collected.append({
+            'mapped_id': mapped_id[i],
+            'doc_name': doc_name[i],
+            'doc_chunk': doc_chunk[i],
+            'support': support[i]
+        })
+
+    return collected
+
+def convert_oracle(dataset: Dataset) -> Dict[str, Dict[str, Any]]:
+    collected = {}
+
+    for data_dict in dataset['oracle']:
+        collected[data_dict['mapped_id']] = data_dict
+    return collected
 
 def check_and_create_directory(save_path: str) -> None:
     directory = os.path.dirname(save_path)

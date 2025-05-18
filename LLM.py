@@ -11,7 +11,7 @@ Usage:
 
 import torch.distributed
 import os, torch, logging, ast
-from utils import load_json, save_json, save_jsonl, check_file
+from utils import load_json, save_json, save_jsonl, check_file, convert_doc_pool, convert_oracle
 from vllm import LLM, SamplingParams
 import contextlib
 import gc
@@ -23,8 +23,10 @@ from openai import AsyncOpenAI
 import asyncio
 import numpy as np
 from tqdm.asyncio import tqdm as async_tqdm
+from datasets import load_dataset
 
 logging.basicConfig(level=logging.INFO)
+hf_dataset = load_dataset("nlpai-lab/mirage")['train']
 
 class LLMGenerator:
     def __init__(self, LLM_info: Dict[str, Any]) -> None:
@@ -50,9 +52,9 @@ class LLMGenerator:
             else:
                 self.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
 
-        self.doc_pool = load_json("mirage/doc_pool.json")
-        self.dataset = load_json("mirage/dataset.json")
-        self.oracle = load_json("mirage/oracle.json")
+        self.doc_pool = convert_doc_pool(hf_dataset)
+        self.dataset = hf_dataset.to_list()
+        self.oracle = convert_oracle(hf_dataset)
 
     def __enter__(self) -> 'LLMGenerator':
         """Enter the context."""

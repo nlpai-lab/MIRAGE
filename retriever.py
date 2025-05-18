@@ -14,9 +14,12 @@ import torch
 from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModel
 from tqdm import tqdm
-from utils import save_json, load_json, check_file, save_jsonl
+from utils import save_json, load_json, check_file, save_jsonl, convert_doc_pool, convert_oracle
 from typing import List, Dict, Any, Tuple
 import numpy as np
+from datasets import load_dataset
+
+hf_dataset = load_dataset("nlpai-lab/mirage")['train']
 
 class Retriever:
     def __init__(self, retriever_info: Dict[str, Any]) -> None:
@@ -29,8 +32,8 @@ class Retriever:
         self.retriever_id = self.retriever_repo.split('/')[1]
         self.device = torch.device('cuda' if self.use_cuda else 'cpu')
         self.model = SentenceTransformer(self.retriever_repo, trust_remote_code=True).to(self.device)
-        self.doc_pool = load_json("mirage/doc_pool.json")
-        self.dataset = load_json("mirage/dataset.json")
+        self.doc_pool = convert_doc_pool(hf_dataset)
+        self.dataset = hf_dataset.to_list()
         self.file_name = f"{self.retriever_id}_top{self.top_k}.json"
         self.save_path = os.path.join(self.save_directory, self.file_name)
 
@@ -113,7 +116,7 @@ class Retriever_Evaluator:
         self.eval_needed = os.listdir(retrieval_dir)
         self.retrieval_dir = retrieval_dir
         self.RET_result_path = RET_result_path
-        self.doc_pool = load_json("mirage/doc_pool.json")
+        self.doc_pool = convert_doc_pool(hf_dataset)
         self.cached_gt = self.cache_ground_truth(self.doc_pool)
 
     def calculate_f1(self, precision: float, recall: float) -> float:
